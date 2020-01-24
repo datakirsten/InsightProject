@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Landing Page - Start Bootstrap Theme</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="/static/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+  <!-- Custom styles for this template -->
+  <link href="/static/css/landing-page.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+<!-- Try Section -->
+	<section class="bg-primary mb-0" id="try">
+  	<div class="container">
+    	<h2 class="text-center text-white">Please enter the url of a HBR website!</h2>
+    	<hr class="star-light mb-5">
+          	<div class="col-sm m-3 text-center">
+                	<form action="/output" method="GET" id="user_input">
+                      	<input class="form-control" type="text" id="user_input" name='user_input' placeholder="https://hbr.org/2018/11/ego-is-the-enemy-of-good-leadership">
+                	</form>
+  	</div>
+   	<div class="row justify-content-center">
+         	<button type="submit" class="btn btn-secondary btn-lg" form="user_input">Go!</button>
+  	</div>
+
+  	{% if my_form_result=='Empty' %}
+  	<div class="row mt-4 justify-content-center">
+        	<h4 class="text-danger text-center text-uppercase">You did not type anything!</h4>
+  	</div>
+
+  	{% elif my_form_result=='NotEmpty' %}
+
+ <div class="row justify-content-start" style="padding-top:10px;">
+<label>{{my_title}}</label>
+                </div>
+                <div class="row justify-content-start" style="padding-top:10px;">
+
+                <div class="col" style="padding-top:10px;">
+<p class="text-black-50">{{my_maintext}}</p>
+                </div>
+                <div class="col" style="padding-top:1px;">
+
+                <div class="row justify-content-end" style="padding-top:10px;">
+<label>SYNONYMS</label>
+
+
+
+                </div>
+                <div class="row justify-content-end" style="padding-top:10px;">
+<p class="text-black-50">
+    Word 1: {{my_first_synonym}}
+    <br />
+    Synonym 1: {{my_first_definition}}
+    <br />
+</p>
+                </div>
+                </div>
+                </div>
+                <div class="row justify-content-end" style="padding-top:10px;">
+
+
+                </div>
+                <div class="row justify-content-end" style="padding-top:10px;">
+                </div>
+
+  	{% else %}
+  	{% endif %}
+  	</div>
+	</section>
+
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/static/vendor/jquery/jquery.min.js"></script>
+  <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
