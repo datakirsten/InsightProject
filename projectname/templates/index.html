@@ -29,11 +29,11 @@
 <!-- Try Section -->
 	<section class="bg-primary mb-0" id="try">
   	<div class="container">
-    	<h2 class="text-center text-white">Please enter the url of a HBR website!</h2>
+    	<h2 class="text-center text-white">Please enter the url of a Medium website!</h2>
     	<hr class="star-light mb-5">
           	<div class="col-sm m-3 text-center">
                 	<form action="/output" method="GET" id="user_input">
-                      	<input class="form-control" type="text" id="user_input" name='user_input' placeholder="https://hbr.org/2018/11/ego-is-the-enemy-of-good-leadership">
+                      	<input class="form-control" type="text" id="user_input" name='user_input' placeholder="https://">
                 	</form>
   	</div>
    	<div class="row justify-content-center">
@@ -52,33 +52,61 @@
                 </div>
                 <div class="row justify-content-start" style="padding-top:10px;">
 
-                <div class="col" style="padding-top:10px;">
-<p class="text-black-50">{{my_maintext}}</p>
-                </div>
-                <div class="col" style="padding-top:1px;">
+<table style="width:100%">
+  <tr>
+    <th>Main text</th>
+    <th>Infrequent words</th>
+  </tr>
+  <tr>
+    <td>{{my_maintext}}</td>
+    <td>{{my_first_word}}<br>{{my_first_definition}}</br></td>
+  </tr>
+  <tr>
+    <td>{{my_maintext2}}</td>
+    <td>{{my_second_word}}<br>{{my_second_definition}}</br></td>
+  </tr>
+  <tr>
+    <td>{{my_maintext3}}</td>
+    <td>{{my_third_word}}<br>{{my_third_definition}}</br></td>
+  </tr>
+      <tr>
+    <td>{{my_maintext4}}</td>
+    <td>{{my_fourth_word}}<br>{{my_fourth_definition}}</br></td>
+  </tr>
+</table>
 
-                <div class="row justify-content-end" style="padding-top:10px;">
-<label>SYNONYMS</label>
+
+<!--                <div class="col" style="padding-top:10px;">-->
+<!--<p class="text-black-50">{{my_maintext}}</p>-->
+<!--                </div>-->
+<!--                <div class="col" style="padding-top:1px;">-->
+
+<!--                <div class="row justify-content-end" style="padding-top:10px;">-->
+<!--<label>TextHelpers</label>-->
 
 
 
-                </div>
-                <div class="row justify-content-end" style="padding-top:10px;">
-<p class="text-black-50">
-    Word 1: {{my_first_synonym}}
-    <br />
-    Synonym 1: {{my_first_definition}}
-    <br />
-</p>
-                </div>
-                </div>
-                </div>
-                <div class="row justify-content-end" style="padding-top:10px;">
+<!--                </div>-->
+<!--                <div class="row justify-content-end" style="padding-top:10px;">-->
+<!--<p class="text-black-50">-->
+<!--    Word 1: {{my_first_word}}-->
+<!--    <br />-->
+<!--    Definition Word 1: {{my_first_definition}}-->
+<!--    <br />-->
+<!--        Word 2: {{my_second_word}}-->
+<!--    <br />-->
+<!--    Definition Word 2: {{my_second_definition}}-->
+<!--    <br />-->
+<!--</p>-->
+<!--                </div>-->
+<!--                </div>-->
+<!--                </div>-->
+<!--                <div class="row justify-content-end" style="padding-top:10px;">-->
 
 
-                </div>
-                <div class="row justify-content-end" style="padding-top:10px;">
-                </div>
+<!--                </div>-->
+<!--                <div class="row justify-content-end" style="padding-top:10px;">-->
+<!--                </div>-->
 
   	{% else %}
   	{% endif %}

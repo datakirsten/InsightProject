@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
-
+from projectname import getsynonyms
+import pandas as pd
 # Create the application object
 app = Flask(__name__)
 
@@ -14,25 +15,39 @@ def recommendation_output():
 	some_input = request.args.get('user_input')
 
 	# Case if empty
-	if some_input == "'":
+	if some_input == "":
 		return render_template("index.html",
 			my_input=some_input,
-			my_form_result="Empty")
+			my_title="Please enter a medium website")
 	else:
-		some_title= "Ego Is the Enemy of Good Leadership"#title
-		some_maintext = "On his first day as CEO of the Carlsberg Group, a global brewery and beverage company, Cees ‘t Hart was given a key card by his assistant. The card locked out all the other floors for the elevator so that he could go directly to his corner office on the 20th floor. And with its picture windows, his office offered a stunning view of Copenhagen. These were the perks of his new position, ones that spoke to his power and importance within the company."#paragraph
-		first_synonym = "perks" #synonym1
-		first_definition = "fringe benefits" #def1
-		second_synonym = "inflated" #synonym2
-		second_definition = "expand"#def2
+		some_title, some_maintext = getsynonyms.getarticle(some_input)
+		paragraph=[]
+		word1=[]
+		word2=[]
+		def1=[]
+		def2=[]
+		for paragraphs in some_maintext:
+			paragraph.append(paragraphs)
+			words=getsynonyms.getfrequencySUBTLEX(str(paragraphs))
+			word1.append(words[0])
+			word2.append(words[1])
+			def1.append(getsynonyms.getsynforinfreq(words[0]))
+			def2.append(getsynonyms.getsynforinfreq(words[1]))
 		return render_template("index.html",
 			my_input=some_input,
 			my_title=some_title,
-			my_maintext=some_maintext,
-			my_first_synonym=first_synonym,
-			my_first_definition=first_definition,
-			my_second_synonym=second_synonym,
-			my_second_definition=second_definition,
+			my_maintext=paragraph[0],
+			my_first_word=word1[0],
+			my_first_definition=def1[0],
+			my_maintext2=paragraph[1],
+			my_second_word=word1[1],
+			my_second_definition=def1[1],
+			my_maintext3=paragraph[2],
+			my_third_word=word1[2],
+			my_third_definition=def1[2],
+			my_maintext4=paragraph[3],
+			my_fourth_word=word1[3],
+			my_fourth_definition=def1[3],
 			my_form_result="NotEmpty")
 
 
