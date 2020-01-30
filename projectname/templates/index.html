@@ -29,11 +29,11 @@
 <!-- Try Section -->
 	<section class="bg-primary mb-0" id="try">
   	<div class="container">
-    	<h2 class="text-center text-white">Please enter the url of a Medium website!</h2>
+    	<h2 class="text-center text-white">Please enter the url of a Towardsdatascience website!</h2>
     	<hr class="star-light mb-5">
           	<div class="col-sm m-3 text-center">
                 	<form action="/output" method="GET" id="user_input">
-                      	<input class="form-control" type="text" id="user_input" name='user_input' placeholder="https://">
+                      	<input class="form-control" type="text" id="user_input" name='user_input' placeholder="https://towardsdatascience.com/late-payment-practices-is-this-the-ticking-time-bomb-of-the-uk-economy-5b958e4dd109">
                 	</form>
   	</div>
    	<div class="row justify-content-center">
@@ -48,29 +48,29 @@
   	{% elif my_form_result=='NotEmpty' %}
 
  <div class="row justify-content-start" style="padding-top:10px;">
-<label>{{my_title}}</label>
+     <label><b>{{my_title}}</b></label>
                 </div>
                 <div class="row justify-content-start" style="padding-top:10px;">
 
 <table style="width:100%">
   <tr>
-    <th>Main text</th>
-    <th>Infrequent words</th>
+<!--    <th>Main text</th>-->
+<!--    <th>Infrequent words</th>-->
   </tr>
   <tr>
-    <td>{{my_maintext}}</td>
-    <td>{{my_first_word}}<br>{{my_first_definition}}</br></td>
+    <td>{{my_maintextbefore}}<b>{{my_maintextkey}}</b>{{my_maintextafter}}</td>
+      <td>{{my_first_word}}<br>{{my_first_definition}}</br></td>
   </tr>
   <tr>
-    <td>{{my_maintext2}}</td>
-    <td>{{my_second_word}}<br>{{my_second_definition}}</br></td>
+    <td>{{my_maintextbefore2}}<b>{{my_maintextkey2}}</b>{{my_maintextafter2}}</td>
+      <td>{{my_second_word}}<br>{{my_second_definition}}</br></td>
   </tr>
   <tr>
-    <td>{{my_maintext3}}</td>
+    <td>{{my_maintextbefore3}}<b>{{my_maintextkey3}}</b>{{my_maintextafter3}}</td>
     <td>{{my_third_word}}<br>{{my_third_definition}}</br></td>
   </tr>
       <tr>
-    <td>{{my_maintext4}}</td>
+    <td>{{my_maintextbefore4}}<b>{{my_maintextkey4}}</b>{{my_maintextafter4}}</td>
     <td>{{my_fourth_word}}<br>{{my_fourth_definition}}</br></td>
   </tr>
 </table>

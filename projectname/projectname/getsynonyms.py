@@ -8,6 +8,8 @@ import pandas as pd
 
 import nltk
 nltk.download('wordnet')
+import requests
+from gensim.summarization import keywords
 
 #from sklearn.pipeline import Pipeline
 #from sklearn.feature_extraction.text import TfidfVectorizer
@@ -16,7 +18,7 @@ from bs4 import BeautifulSoup
 import requests
 
 # Location of website and getting the content with BeautifulSoup
-url = "https://towardsdatascience.com/a-b-testing-is-there-a-better-way-an-exploration-of-multi-armed-bandits-98ca927b357d"
+url = "https://towardsdatascience.com/late-payment-practices-is-this-the-ticking-time-bomb-of-the-uk-economy-5b958e4dd109"
 
 
 def getarticle(currenturl):
@@ -45,7 +47,7 @@ def getarticle(currenturl):
     return title,paragraphtext
 
 b=getarticle(url)
-
+#print(b[1])
 def getfrequencySUBTLEX(input_paragraph):
     # read in subtlexus corpus, large corpus with frequency information
     article_lemma = nlp(input_paragraph)
@@ -66,12 +68,18 @@ def getfrequencySUBTLEX(input_paragraph):
         counter = counter + 1
     outputtuple = sorted(zip(corpus_results, corpus_results_counter))[:2]
     mostinfrequent=article_lemma[outputtuple[0][1]]
-    secondmostinfrequent=article_lemma[outputtuple[1][1]]
-    return(mostinfrequent, secondmostinfrequent)
+ #   secondmostinfrequent=article_lemma[outputtuple[1][1]]
+    return(mostinfrequent)
 
-#for paragraph in b:
-#    a=getfrequencySUBTLEX(str(paragraph))
-#    print(a[0])
+#for paragraph in b[1]:
+ #   a=getfrequencySUBTLEX(str(paragraph))
+  #  print(a)
+
+def findkeywords(input_paragraph):
+    keyword=keywords(input_paragraph, words=1,scores=False, lemmatize=False, pos_filter=('NN', 'VB'))
+    return keyword
+
+
 
 def getfrequencyTFIDF(input_paragraph):
     vectorizer = TfidfVectorizer()

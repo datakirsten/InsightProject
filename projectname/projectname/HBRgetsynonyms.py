@@ -11,7 +11,7 @@ nltk.download('wordnet')
 # Import the relevant tools to get text from a website
 from bs4 import BeautifulSoup
 import requests
-
+from gensim.summarization import keywords
 # Location of website and getting the content with BeautifulSoup
 url = "https://hbr.org/2018/11/ego-is-the-enemy-of-good-leadership"
 
@@ -53,6 +53,10 @@ def getarticle(currenturl):
  #   return article_lemma
 
 #para_lemma=lemmatize(mycurrentparagraph[0])
+
+def findkeywords(input_paragraph):
+    keyword=keywords(input_paragraph, words=1,scores=True, lemmatize=True,pos_filter=('NN', 'VB'))
+    return keyword
 
 def getfrequencySUBTLEX(input_paragraph):
     # read in subtlexus corpus, large corpus with frequency information
