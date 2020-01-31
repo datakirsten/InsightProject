@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1ed3631c-566c-41b6-8215-7af129f8f212" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/projectname/test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projectname/HBRgetsynonyms.py" beforeDir="false" afterPath="$PROJECT_DIR$/projectname/HBRgetsynonyms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projectname/getsynonyms.py" beforeDir="false" afterPath="$PROJECT_DIR$/projectname/getsynonyms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/landing-page.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/landing-page.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/landing-page.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/landing-page.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/scss/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/static/scss/_variables.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -29,16 +30,17 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/projectname" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/static/css" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/templates" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/static/css" />
       <recent name="$PROJECT_DIR$/projectname" />
       <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/templates" />
     </key>
   </component>
   <component name="RunDashboard">

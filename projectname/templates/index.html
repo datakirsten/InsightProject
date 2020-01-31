@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Landing Page - Start Bootstrap Theme</title>
+  <title>Landing Page - Text Helper</title>
 
   <!-- Bootstrap core CSS -->
   <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -27,18 +27,19 @@
 
 
 <!-- Try Section -->
-	<section class="bg-primary mb-0" id="try">
+
   	<div class="container">
-    	<h2 class="text-center text-white">Please enter the url of a Towardsdatascience website!</h2>
-    	<hr class="star-light mb-5">
-          	<div class="col-sm m-3 text-center">
-                	<form action="/output" method="GET" id="user_input">
-                      	<input class="form-control" type="text" id="user_input" name='user_input' placeholder="https://towardsdatascience.com/late-payment-practices-is-this-the-ticking-time-bomb-of-the-uk-economy-5b958e4dd109">
-                	</form>
-  	</div>
-   	<div class="row justify-content-center">
+        <br>
+    	<h2 class="text-center text-black">Please enter the url of a Towardsdatascience website!</h2>
+        <hr>
+        <form action="/output" method="GET" id="user_input">
+            <input class="form-control" type="text" id="user_input" name='user_input' placeholder="https://towardsdatascience.com/late-payment-practices-is-this-the-ticking-time-bomb-of-the-uk-economy-5b958e4dd109">
+        </form>
+        <br>
+        <div class="row justify-content-center">
          	<button type="submit" class="btn btn-secondary btn-lg" form="user_input">Go!</button>
   	</div>
+        <br>
 
   	{% if my_form_result=='Empty' %}
   	<div class="row mt-4 justify-content-center">
@@ -46,7 +47,7 @@
   	</div>
 
   	{% elif my_form_result=='NotEmpty' %}
-
+<!--Output table showing main text and text helper tools-->
  <div class="row justify-content-start" style="padding-top:10px;">
      <label><b>{{my_title}}</b></label>
                 </div>
@@ -59,54 +60,22 @@
   </tr>
   <tr>
     <td>{{my_maintextbefore}}<b>{{my_maintextkey}}</b>{{my_maintextafter}}</td>
-      <td>{{my_first_word}}<br>{{my_first_definition}}</br></td>
+      <td><b>{{my_first_word}}</b><br>{{my_first_definition}}</br></td>
   </tr>
   <tr>
     <td>{{my_maintextbefore2}}<b>{{my_maintextkey2}}</b>{{my_maintextafter2}}</td>
-      <td>{{my_second_word}}<br>{{my_second_definition}}</br></td>
+      <td><b>{{my_second_word}}</b><br>{{my_second_definition}}</br></td>
   </tr>
   <tr>
     <td>{{my_maintextbefore3}}<b>{{my_maintextkey3}}</b>{{my_maintextafter3}}</td>
-    <td>{{my_third_word}}<br>{{my_third_definition}}</br></td>
+      <td><b>{{my_third_word}}</b><br>{{my_third_definition}}</br></td>
   </tr>
       <tr>
     <td>{{my_maintextbefore4}}<b>{{my_maintextkey4}}</b>{{my_maintextafter4}}</td>
-    <td>{{my_fourth_word}}<br>{{my_fourth_definition}}</br></td>
+          <td><b>{{my_fourth_word}}</b><br>{{my_fourth_definition}}</br></td>
   </tr>
 </table>
 
-
-<!--                <div class="col" style="padding-top:10px;">-->
-<!--<p class="text-black-50">{{my_maintext}}</p>-->
-<!--                </div>-->
-<!--                <div class="col" style="padding-top:1px;">-->
-
-<!--                <div class="row justify-content-end" style="padding-top:10px;">-->
-<!--<label>TextHelpers</label>-->
-
-
-
-<!--                </div>-->
-<!--                <div class="row justify-content-end" style="padding-top:10px;">-->
-<!--<p class="text-black-50">-->
-<!--    Word 1: {{my_first_word}}-->
-<!--    <br />-->
-<!--    Definition Word 1: {{my_first_definition}}-->
-<!--    <br />-->
-<!--        Word 2: {{my_second_word}}-->
-<!--    <br />-->
-<!--    Definition Word 2: {{my_second_definition}}-->
-<!--    <br />-->
-<!--</p>-->
-<!--                </div>-->
-<!--                </div>-->
-<!--                </div>-->
-<!--                <div class="row justify-content-end" style="padding-top:10px;">-->
-
-
-<!--                </div>-->
-<!--                <div class="row justify-content-end" style="padding-top:10px;">-->
-<!--                </div>-->
 
   	{% else %}
   	{% endif %}
