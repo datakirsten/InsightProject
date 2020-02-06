@@ -1,6 +1,7 @@
 #import relevant tools to create a flask app
 from flask import Flask, render_template, request
 from projectname import getsynonyms
+from flask_table import Table, Col
 
 # Create the application object
 app = Flask(__name__)
@@ -18,10 +19,10 @@ def recommendation_output():
 	# Case if input empty
 	# Use the example from the website shown
 	if some_input == "":
-		some_input="https://towardsdatascience.com/late-payment-practices-is-this-the-ticking-time-bomb-of-the-uk-economy-5b958e4dd109"
+		some_input="https://towardsdatascience.com/introduction-to-streaming-algorithms-b71808de6d29"
 
-	###use the functions in the getsynonyms.py file to scrape the website text and provide the TextHelper tool output to the flas app
-	some_title, some_maintext = getsynonyms.getarticle(some_input)
+	###use the functions in the getsynonyms.py file to scrape the website text and provide the TextHelper tool output to the flask app
+	some_title, someprevious_maintext, some_maintext = getsynonyms.getarticle(some_input)
 	paragraph=[]
 	word1=[]
 	def1=[]
@@ -29,13 +30,19 @@ def recommendation_output():
 	parabefore=[]
 	parakey=[]
 	paraafter=[]
+	items=[]
+	TableCls = create_table('TableCls') \
+		.add_column('paragraphs', Col('Main Text')) \
+		.add_column('infrequent', Col('Definitions'))
 	for paragraphs in some_maintext:
 		paragraph.append(paragraphs)
-		words=getsynonyms.getfrequencySUBTLEX(str(paragraphs))
+		words=getsynonyms.getfrequencySUBTLEX(getsynonyms.spacy_nlp(str(paragraphs))[1])
 		word1.append(words)
 		def1.append(getsynonyms.getsynforinfreq(words))
-		currentkeyword=getsynonyms.findkeywords(paragraphs)
+		currentkeyword=getsynonyms.findkeywords(getsynonyms.spacy_nlp(str(paragraphs))[0])
 		keyword.append(currentkeyword)
+		currentdict={}
+		items.append(currentdict)
 		if not currentkeyword:
 			parabefore.append(paragraphs)
 			parakey.append([])
@@ -45,10 +52,13 @@ def recommendation_output():
 			parabefore.append(parapartition[0])
 			parakey.append(parapartition[1])
 			paraafter.append(parapartition[2])
+
+	current_table=TableCls(items)
 	##todo make the output more dynamic so it can adapt to number of paragraphs & generate the table accordingly
 	return render_template("index.html",
 		my_input=some_input,
 		my_title=some_title,
+		my_table=current_table,
 		my_maintextbefore=parabefore[0],
 		my_maintextkey=parakey[0],
 		my_maintextafter=paraafter[0],
@@ -78,5 +88,5 @@ def recommendation_output():
 
 # start the server with the 'run()' method
 if __name__ == "__main__":
-	app.run(debug=True)  # will run locally http://127.0.0.1:5000/
+	app.run(port=8000)  # will run locally http://127.0.0.1:5000/
 
