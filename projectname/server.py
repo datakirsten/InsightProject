@@ -19,10 +19,10 @@ def recommendation_output():
 	# Case if input empty
 	# Use the example from the website shown
 	if some_input == "":
-		some_input="https://towardsdatascience.com/introduction-to-streaming-algorithms-b71808de6d29"
+		some_input="https://towardsdatascience.com/how-discrimination-occurs-in-data-analytics-and-machine-learning-proxy-variables-7c22ff20792"
 
 	###use the functions in the getsynonyms.py file to scrape the website text and provide the TextHelper tool output to the flask app
-	some_title, someprevious_maintext, some_maintext = getsynonyms.getarticle(some_input)
+	some_title, some_maintext, someother_maintext = getsynonyms.getarticle(some_input)
 	paragraph=[]
 	word1=[]
 	def1=[]
@@ -31,9 +31,9 @@ def recommendation_output():
 	parakey=[]
 	paraafter=[]
 	items=[]
-	TableCls = create_table('TableCls') \
-		.add_column('paragraphs', Col('Main Text')) \
-		.add_column('infrequent', Col('Definitions'))
+	class TableCls(Table):
+		paragraphs = Col('Main Text')
+		infrequent = Col('Defintiions')
 	for paragraphs in some_maintext:
 		paragraph.append(paragraphs)
 		words=getsynonyms.getfrequencySUBTLEX(getsynonyms.spacy_nlp(str(paragraphs))[1])
@@ -42,6 +42,8 @@ def recommendation_output():
 		currentkeyword=getsynonyms.findkeywords(getsynonyms.spacy_nlp(str(paragraphs))[0])
 		keyword.append(currentkeyword)
 		currentdict={}
+		currentdict['paragraphs']=paragraphs
+		currentdict['infrequent']=words
 		items.append(currentdict)
 		if not currentkeyword:
 			parabefore.append(paragraphs)
@@ -52,7 +54,6 @@ def recommendation_output():
 			parabefore.append(parapartition[0])
 			parakey.append(parapartition[1])
 			paraafter.append(parapartition[2])
-
 	current_table=TableCls(items)
 	##todo make the output more dynamic so it can adapt to number of paragraphs & generate the table accordingly
 	return render_template("index.html",
@@ -83,6 +84,24 @@ def recommendation_output():
 		my_fourth_word=word1[3],
 		my_fourth_definition=def1[3],
 		my_fourth_keyword=keyword[3],
+		my_maintextbefore5=parabefore[4],
+		my_maintextkey5=parakey[4],
+		my_maintextafter5=paraafter[4],
+		my_fifth_word=word1[4],
+		my_fifth_definition=def1[4],
+		my_fifth_keyword=keyword[4],
+		my_maintextbefore6=parabefore[5],
+		my_maintextkey6=parakey[5],
+		my_maintextafter6=paraafter[5],
+		my_sixth_word=word1[5],
+		my_sixth_definition=def1[5],
+		my_sixth_keyword=keyword[5],
+		my_maintextbefore7=parabefore[6],
+		my_maintextkey7=parakey[6],
+		my_maintextafter7=paraafter[6],
+		my_seventh_word=word1[6],
+		my_seventh_definition=def1[6],
+		my_seventh_keyword=keyword[6],
 		my_form_result="NotEmpty")
 
 

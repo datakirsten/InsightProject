@@ -8,13 +8,15 @@ import pandas as pd
 import nltk
 nltk.download('wordnet')
 from gensim.summarization import keywords
+import gensim.corpora as corpora
+import gensim.models as models
 
 # Import the relevant tools to get text from a website
 from bs4 import BeautifulSoup
 import requests
 
 # Example of an url input website
-url = "https://towardsdatascience.com/introduction-to-streaming-algorithms-b71808de6d29"
+url = "https://towardsdatascience.com/how-discrimination-occurs-in-data-analytics-and-machine-learning-proxy-variables-7c22ff20792"
 
 ###function to scrape text from a medium article
 def getarticle(currenturl):
@@ -39,20 +41,30 @@ def getarticle(currenturl):
         text = paragraph.get_text()
         paragraphtext.append(text)
          ###something is still going wrong here...
-        if len(text.split())<50:
-            ####add if loop: if newparagraphtext=[] append to newparaghtext anyways, only if there is already an element add to prevoiustext
-            if newparagraphtext==[]:
-                newparagraphtext.append(text)
-            else:
-                previoustext=previoustext + " " + text
-        else:
-            mytext=previoustext + " " + text
-            newparagraphtext.append(mytext)
-            if len(mytext.split())>=50:
-                previoustext=""
+        # if len(text.split())<100:
+        #     ####add if loop: if newparagraphtext=[] append to newparaghtext anyways, only if there is already an element add to prevoiustext
+        #     if newparagraphtext==[]:
+        #         newparagraphtext.append(text)
+        #     else:
+        #         previoustext=previoustext + " " + text
+        # else:
+        #     mytext=previoustext + " " + text
+        #     newparagraphtext.append(mytext)
+        #     if len(mytext.split())>=100:
+        #         previoustext=""
+    newparagraphtext=paragraphtext.copy()
+    mylist = []
+    x=len(paragraphtext[0].split())
+    for i in range(len(paragraphtext)):
+     #  len(paragraphtext[0].split())
+        newparagraphtext[i-1:i]=[''.join(newparagraphtext[i-1:i])]
     return title, paragraphtext,newparagraphtext
 
 b=getarticle(url)
+#print(b[1])
+#print(b[2])
+
+
 
 ##do preprocessing in spacy to get parts of of speech (POS) and lemmatized words
 ##return both the whole spacy preprocessing ouput (article_lemma) & a list of lemmas limited to POS=Noun
@@ -110,23 +122,38 @@ print(e)
 
 ###get infrequent words using TDIDF (still needs to be moved here from jupyter notebook)
 def getfrequencyTFIDF(input_paragraph):
-    lexicon = gensim.corpora.Dictionary.load_from_text('lexicon.txt')
-    tfidf = gensim.models.TfidfModel.load('tfidf.pkl')
-    corpus_tfidf = tfidf[input_paragraph]
+    input_text = ' '.join(word.lemma_ for word in input_paragraph)
+    lexicon = corpora.Dictionary.load_from_text('lexicon.txt')
+    tfidf = models.TfidfModel.load('tfidf.pkl')
+    corpus_tfidf = tfidf[input_text]
     ###add a part that sorts based on frequency
     return corpus_tfidf
 
+#f=getfrequencyTFIDF(c[0])
+#print(f)
 
 ###get definitions (and synonyms,currently commented) using wordnet
 def getsynforinfreq(word):
     from nltk.corpus import wordnet as wn  # Import wordnet from the NLTK
     syn = []
-    currentpos="wn."+ word.pos_
-    ###check whether it puts out the first or last synonym definition
-    for synset in wn.synsets(str(word)):#,pos=str(currentpos)):
-        ##get the synonyms
-        # for lemma in synset.lemmas():
-        # if str(lemma.name()) != word:
-        #   syn.append(lemma.name())  # add the synonyms
-        return synset.definition() #, currentpos
+    definition=[]
+    currentpos_name=word.pos_
+    if currentpos_name=="ADV":
+        currentpos_name="r"
+    x=currentpos_name[0].lower()
+    synsets=wn.synsets(str(word),pos=str(x))#,pos=currentpos)
+    #definition=synsets[0].definition()
+    mysyn=[]
+    #synonym=synsets[0].hypernyms()
+    for syn in synsets:
+        definition.append(syn.definition())
+        for lemma in syn.lemmas():
+            if str(lemma.name()) != word.lemma_:
+                mysyn.append(lemma.name())
+    if definition==[]:
+        definition.append("no definition found")
+    if mysyn==[]:
+        mysyn.append("no synonym found")
+    return mysyn[0]#definition[0] #definition[0] #, mysyn[0]
+
 
