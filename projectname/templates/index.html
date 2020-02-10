@@ -9,18 +9,23 @@
   <meta name="author" content="">
 
   <title>Landing Page - Text Helper</title>
+    <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+	<style>
+	body {background-color:#ede3da;}
+    h1 {background-color:#666666;}
+    h1 {color:#ffffff;}
+	button.large {background-color:#31394d;}
+	</style>
+<!--  &lt;!&ndash; Bootstrap core CSS &ndash;&gt;-->
+<!--  <link href="/home/ubuntu/application/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
 
-  <!-- Bootstrap core CSS -->
-  <link href="/home/ubuntu/application/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!--  &lt;!&ndash; Custom fonts for this template &ndash;&gt;-->
+<!--  <link href="/home/ubuntu/application/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">-->
+<!--  <link href="/home/ubuntu/application/static/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">-->
+<!--  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">-->
 
-  <!-- Custom fonts for this template -->
-  <link href="/home/ubuntu/application/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-  <link href="/home/ubuntu/application/static/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-
-  <!-- Custom styles for this template -->
-  <link href="/home/ubuntu/application/static/css/landing-page.min.css" rel="stylesheet">
-
+<!--  &lt;!&ndash; Custom styles for this template &ndash;&gt;-->
+<!--  <link href="/home/ubuntu/application/static/css/landing-page.min.css" rel="stylesheet">-->
 </head>
 
 <body>
@@ -29,15 +34,20 @@
 <!-- Try Section -->
 
   	<div class="container">
+<!--        <img src="TextHelper.png" alt="TextHelper">-->
+<!--        <h1 style="color:white">TextHelper</h1>-->
         <br>
-    	<h2 class="text-center text-black">Please enter the url of a Towardsdatascience website!</h2>
+    	<h1 class="text-center text-white">TextHelper - Understand text faster</h1>
+        <br>
+        <h4 class="text-center text-white">Please enter the url of a Towardsdatascience website:</h4>
         <hr>
         <form action="/output" method="GET" id="user_input">
             <input class="form-control" type="text" id="user_input" name='user_input' placeholder="https://towardsdatascience.com/introduction-to-streaming-algorithms-b71808de6d29">
         </form>
         <br>
         <div class="row justify-content-center">
-         	<button type="submit" class="btn btn-secondary btn-lg" form="user_input">Go!</button>
+         	<button type="submit" class="button large expanded" form="user_input">Go!</button>
+<!--            class="button large expanded" -->
   	</div>
         <br>
 
@@ -45,50 +55,48 @@
   	<div class="row mt-4 justify-content-center">
         	<h4 class="text-danger text-center text-uppercase">You did not type anything!</h4>
   	</div>
-
   	{% elif my_form_result=='NotEmpty' %}
 <!--Output table showing main text and text helper tools-->
- <div class="row justify-content-start" style="padding-top:10px;">
-     <label><b>{{my_title}}</b></label>
-                </div>
-                <div class="row justify-content-start" style="padding-top:10px;">
+<!-- <div class="row justify-content-start" style="padding-top:10px;">-->
+<!--     <label><b>{{my_title}}</b></label>-->
+<!--                </div>-->
+<!--                <div class="row justify-content-start" style="padding-top:10px;">-->
 <!--{{my_table}}-->
-
 
 <table style="width:100%">
   <tr>
-   <th>Main text</th>
-   <th>Infrequent words</th>
+   <th>{{my_title}}</th>
+   <th>Synonyms or Definitions</th>
   </tr>
   <tr>
-      <td>{{my_maintextbefore}}<b><font color="blue">{{my_maintextkey}}</font></b>{{my_maintextafter}}</td>
-      <td><b><font color="green">{{my_first_word}}</font></b><br>{{my_first_definition}}</br></td>
+      <td>{{my_maintextbefore}}<b><font color="#002f4a">{{my_maintextkey}}</font></b>{{my_maintextafter}}</td>
+      <td><b><font color="#009384">{{my_first_word}}</font></b><br>{{my_first_definition}}</br></td>
   </tr>
   <tr>
-    <td>{{my_maintextbefore2}}<b><font color="blue">{{my_maintextkey2}}</font></b>{{my_maintextafter2}}</td>
-      <td><b><font color="green">{{my_second_word}}</font></b><br>{{my_second_definition}}</br></td>
+    <td>{{my_maintextbefore2}}<b><font color="#002f4a">{{my_maintextkey2}}</font></b>{{my_maintextafter2}}</td>
+      <td><b><font color="#009384">{{my_second_word}}</font></b><br>{{my_second_definition}}</br></td>
   </tr>
   <tr>
-    <td>{{my_maintextbefore3}}<b><font color="blue">{{my_maintextkey3}}</font></b>{{my_maintextafter3}}</td>
-      <td><b><font color="green">{{my_third_word}}</font></b><br>{{my_third_definition}}</br></td>
+    <td>{{my_maintextbefore3}}<b><font color="#002f4a">{{my_maintextkey3}}</font></b>{{my_maintextafter3}}</td>
+      <td><b><font color="#009384">{{my_third_word}}</font></b><br>{{my_third_definition}}</br></td>
   </tr>
       <tr>
-    <td>{{my_maintextbefore4}}<b><font color="blue">{{my_maintextkey4}}</font></b>{{my_maintextafter4}}</td>
-          <td><b><font color="green">{{my_fourth_word}}</font></b><br>{{my_fourth_definition}}</br></td>
-  </tr>
-  </tr>
-      <tr>
-    <td>{{my_maintextbefore5}}<b><font color="blue">{{my_maintextkey5}}</font></b>{{my_maintextafter5}}</td>
-          <td><b><font color="green">{{my_fifth_word}}</font></b><br>{{my_fifth_definition}}</br></td>
+    <td>{{my_maintextbefore4}}<b><font color="#002f4a">{{my_maintextkey4}}</font></b>{{my_maintextafter4}}</td>
+          <td><b><font color="#009384">{{my_fourth_word}}</font></b><br>{{my_fourth_definition}}</br></td>
   </tr>
   </tr>
       <tr>
-    <td>{{my_maintextbefore6}}<b><font color="blue">{{my_maintextkey6}}</font></b>{{my_maintextafter6}}</td>
-          <td><b><font color="green">{{my_sixth_word}}</font></b><br>{{my_sixth_definition}}</br></td>
+    <td>{{my_maintextbefore5}}<b><font color="#002f4a">{{my_maintextkey5}}</font></b>{{my_maintextafter5}}</td>
+          <td><b><font color="#009384">{{my_fifth_word}}</font></b><br>{{my_fifth_definition}}</br></td>
+  </tr>
+  </tr>
+      <tr>
+    <td>{{my_maintextbefore6}}<b><font color="#002f4a">{{my_maintextkey6}}</font></b>{{my_maintextafter6}}</td>
+          <td><b><font color="#009384">{{my_sixth_word}}</font></b><br>{{my_sixth_definition}}</br></td>
   </tr>
           <tr>
-    <td>{{my_maintextbefore7}}<b><font color="blue">{{my_maintextkey7}}</font></b>{{my_maintextafter7}}</td>
-          <td><b><font color="green">{{my_seventh_word}}</font></b><br>{{my_seventh_definition}}</br></td>
+    <td>{{my_maintextbefore7}}<b><font color="#002f4a">{{my_maintextkey7}}</font></b>{{my_maintextafter7}}</td>
+          <td><b><font color="#009384">{{my_seventh_word}}</font></b><br>{{my_seventh_definition}}</br></td>
   </tr>
 </table>
 
