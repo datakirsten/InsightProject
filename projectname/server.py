@@ -1,7 +1,9 @@
 #import relevant tools to create a flask app
 from flask import Flask, render_template, request
 from projectname import getsynonyms
-from flask_table import Table, Col
+#from flask_wtf import FlaskForm
+#from wtforms import BooleanField
+#from flask_table import Table, Col
 
 # Create the application object
 app = Flask(__name__)
@@ -12,10 +14,10 @@ def home_page():
 
 @app.route('/output')
 def recommendation_output():
-	#
 	# Pull input
 	some_input = request.args.get('user_input')
-
+	radio_value=request.args.get('syndef')
+	#assert radio_value == 5, f"Radio Value {radio_value}"
 	# Case if input empty
 	# Use the example from the website shown
 	if some_input == "":
@@ -31,14 +33,16 @@ def recommendation_output():
 	parakey=[]
 	paraafter=[]
 	items=[]
-	class TableCls(Table):
-		paragraphs = Col('Main Text')
-		infrequent = Col('Defintiions')
 	for paragraphs in some_maintext:
 		paragraph.append(paragraphs)
 		words=getsynonyms.getfrequencySUBTLEX(getsynonyms.spacy_nlp(str(paragraphs))[1])
 		word1.append(words)
-		def1.append(getsynonyms.getsynforinfreq(words))
+		if radio_value=="1":
+			def1.append(getsynonyms.getsynforinfreq(words)[0])
+			whichdeforsyn="Synonyms"
+		else:
+			def1.append(getsynonyms.getsynforinfreq(words)[1])
+			whichdeforsyn = "Definitions"
 		currentkeyword=getsynonyms.findkeywords(getsynonyms.spacy_nlp(str(paragraphs))[0])
 		keyword.append(currentkeyword)
 		currentdict={}
@@ -54,54 +58,25 @@ def recommendation_output():
 			parabefore.append(parapartition[0])
 			parakey.append(parapartition[1])
 			paraafter.append(parapartition[2])
-	current_table=TableCls(items)
+	for i in range(0,20):
+		parabefore.append("")
+		parakey.append("")
+		paraafter.append("")
+		def1.append("")
+		keyword.append("")
+		word1.append("")
 	##todo make the output more dynamic so it can adapt to number of paragraphs & generate the table accordingly
 	return render_template("index.html",
-		my_input=some_input,
+		#my_input=some_input,
+		my_radiovalue=radio_value,
 		my_title=some_title,
-		my_table=current_table,
-		my_maintextbefore=parabefore[0],
-		my_maintextkey=parakey[0],
-		my_maintextafter=paraafter[0],
-		my_first_word=word1[0],
-		my_first_definition=def1[0],
-		my_first_keyword=keyword[0],
-		my_maintextbefore2=parabefore[1],
-		my_maintextkey2=parakey[1],
-		my_maintextafter2=paraafter[1],
-		my_second_word=word1[1],
-		my_second_definition=def1[1],
-		my_second_keyword=keyword[1],
-		my_maintextbefore3=parabefore[2],
-		my_maintextkey3=parakey[2],
-		my_maintextafter3=paraafter[2],
-		my_third_word=word1[2],
-		my_third_definition=def1[2],
-		my_third_keyword=keyword[2],
-		my_maintextbefore4=parabefore[3],
-		my_maintextkey4=parakey[3],
-		my_maintextafter4=paraafter[3],
-		my_fourth_word=word1[3],
-		my_fourth_definition=def1[3],
-		my_fourth_keyword=keyword[3],
-		my_maintextbefore5=parabefore[4],
-		my_maintextkey5=parakey[4],
-		my_maintextafter5=paraafter[4],
-		my_fifth_word=word1[4],
-		my_fifth_definition=def1[4],
-		my_fifth_keyword=keyword[4],
-		my_maintextbefore6=parabefore[5],
-		my_maintextkey6=parakey[5],
-		my_maintextafter6=paraafter[5],
-		my_sixth_word=word1[5],
-		my_sixth_definition=def1[5],
-		my_sixth_keyword=keyword[5],
-		my_maintextbefore7=parabefore[6],
-		my_maintextkey7=parakey[6],
-		my_maintextafter7=paraafter[6],
-		my_seventh_word=word1[6],
-		my_seventh_definition=def1[6],
-		my_seventh_keyword=keyword[6],
+		parabefore=parabefore,
+		parakey=parakey,
+		paraafter=paraafter,
+		def1=def1,
+		which_output=whichdeforsyn,
+		keyword=keyword,
+		word1=word1,
 		my_form_result="NotEmpty")
 
 

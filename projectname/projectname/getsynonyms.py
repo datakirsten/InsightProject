@@ -87,8 +87,8 @@ c=spacy_nlp(str(b[1]))
 ###returns the most infrequent word
 def getfrequencySUBTLEX(input_paragraph):
     # read in subtlexus corpus, large corpus with frequency information
-    #corpus = pd.read_csv('/Users/Kirsten/Documents/GitHub/InsightProject/data/corpora/SUBTLEXusExcel2007.tsv', sep='\t', index_col="Word")
-    corpus = pd.read_csv('/home/ubuntu/application/data/corpora/SUBTLEXusExcel2007.tsv', sep='\t', index_col="Word")
+    corpus = pd.read_csv('/Users/Kirsten/Documents/GitHub/InsightProject/data/corpora/SUBTLEXusExcel2007.tsv', sep='\t', index_col="Word")
+    #corpus = pd.read_csv('/home/ubuntu/application/data/corpora/SUBTLEXusExcel2007.tsv', sep='\t', index_col="Word")
 
     corpus.head()
     # for those word types carrying meaning (filter on POS), make a ranking according to frequency
@@ -154,6 +154,6 @@ def getsynforinfreq(word):
         definition.append("no definition found")
     if mysyn==[]:
         mysyn.append("no synonym found")
-    return definition[0] #definition[0] #definition[0] #, mysyn[0]
+    return definition[0], mysyn[0] #definition[0] #definition[0] #, mysyn[0]
 
 

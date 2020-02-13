@@ -11,7 +11,7 @@
   <title>Landing Page - Text Helper</title>
     <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
 	<style>
-	body {background-color:#ede3da;}
+	body {background-color:#ffffff;}
     h1 {background-color:#666666;}
     h1 {color:#ffffff;}
 	button.large {background-color:#31394d;}
@@ -42,13 +42,15 @@
         <h4 class="text-center text-white">Please enter the url of a Towardsdatascience website:</h4>
         <hr>
         <form action="/output" method="GET" id="user_input">
-            <input class="form-control" type="text" id="user_input" name='user_input' placeholder="https://towardsdatascience.com/introduction-to-streaming-algorithms-b71808de6d29">
+            <input class="form-control" type="text" id="user_input" name='user_input' placeholder="https://towardsdatascience.com/how-discrimination-occurs-in-data-analytics-and-machine-learning-proxy-variables-7c22ff20792">
+            <input type="radio" name="syndef" value="1" checked> Synonyms
+            <input type="radio" name="syndef" value="2"> Definitions
         </form>
         <br>
         <div class="row justify-content-center">
          	<button type="submit" class="button large expanded" form="user_input">Go!</button>
 <!--            class="button large expanded" -->
-  	</div>
+  	    </div>
         <br>
 
   	{% if my_form_result=='Empty' %}
@@ -63,40 +65,76 @@
 <!--                <div class="row justify-content-start" style="padding-top:10px;">-->
 <!--{{my_table}}-->
 
-<table style="width:100%">
+
+
+<table style="width:100%" id="my-table">
   <tr>
    <th>{{my_title}}</th>
-   <th>Synonyms or Definitions</th>
+   <th>{{which_output}}</th>
   </tr>
   <tr>
-      <td>{{my_maintextbefore}}<b><font color="#002f4a">{{my_maintextkey}}</font></b>{{my_maintextafter}}</td>
-      <td><b><font color="#009384">{{my_first_word}}</font></b><br>{{my_first_definition}}</br></td>
+      <td>{{parabefore[0]}}<b><font color="#002f4a">{{parakey[0]}}</font></b>{{paraafter[0]}}</td>
+      <td><b><font color="#009384">{{word1[0]}}</font></b><br>{{def1[0]}}</br></td>
   </tr>
   <tr>
-    <td>{{my_maintextbefore2}}<b><font color="#002f4a">{{my_maintextkey2}}</font></b>{{my_maintextafter2}}</td>
-      <td><b><font color="#009384">{{my_second_word}}</font></b><br>{{my_second_definition}}</br></td>
+      <td>{{parabefore[1]}}<b><font color="#002f4a">{{parakey[1]}}</font></b>{{paraafter[1]}}</td>
+      <td><b><font color="#009384">{{word1[1]}}</font></b><br>{{def1[1]}}</br></td>
   </tr>
   <tr>
-    <td>{{my_maintextbefore3}}<b><font color="#002f4a">{{my_maintextkey3}}</font></b>{{my_maintextafter3}}</td>
-      <td><b><font color="#009384">{{my_third_word}}</font></b><br>{{my_third_definition}}</br></td>
+      <td>{{parabefore[2]}}<b><font color="#002f4a">{{parakey[2]}}</font></b>{{paraafter[2]}}</td>
+      <td><b><font color="#009384">{{word1[2]}}</font></b><br>{{def1[2]}}</br></td>
   </tr>
-      <tr>
-    <td>{{my_maintextbefore4}}<b><font color="#002f4a">{{my_maintextkey4}}</font></b>{{my_maintextafter4}}</td>
-          <td><b><font color="#009384">{{my_fourth_word}}</font></b><br>{{my_fourth_definition}}</br></td>
+  <tr>
+      <td>{{parabefore[3]}}<b><font color="#002f4a">{{parakey[3]}}</font></b>{{paraafter[3]}}</td>
+      <td><b><font color="#009384">{{word1[3]}}</font></b><br>{{def1[3]}}</br></td>
   </tr>
+  <tr>
+      <td>{{parabefore[4]}}<b><font color="#002f4a">{{parakey[4]}}</font></b>{{paraafter[4]}}</td>
+      <td><b><font color="#009384">{{word1[4]}}</font></b><br>{{def1[4]}}</br></td>
   </tr>
-      <tr>
-    <td>{{my_maintextbefore5}}<b><font color="#002f4a">{{my_maintextkey5}}</font></b>{{my_maintextafter5}}</td>
-          <td><b><font color="#009384">{{my_fifth_word}}</font></b><br>{{my_fifth_definition}}</br></td>
+  <tr>
+      <td>{{parabefore[5]}}<b><font color="#002f4a">{{parakey[5]}}</font></b>{{paraafter[5]}}</td>
+      <td><b><font color="#009384">{{word1[5]}}</font></b><br>{{def1[5]}}</br></td>
   </tr>
+  <tr>
+      <td>{{parabefore[6]}}<b><font color="#002f4a">{{parakey[6]}}</font></b>{{paraafter[6]}}</td>
+      <td><b><font color="#009384">{{word1[6]}}</font></b><br>{{def1[6]}}</br></td>
   </tr>
-      <tr>
-    <td>{{my_maintextbefore6}}<b><font color="#002f4a">{{my_maintextkey6}}</font></b>{{my_maintextafter6}}</td>
-          <td><b><font color="#009384">{{my_sixth_word}}</font></b><br>{{my_sixth_definition}}</br></td>
+  <tr>
+      <td>{{parabefore[7]}}<b><font color="#002f4a">{{parakey[7]}}</font></b>{{paraafter[7]}}</td>
+      <td><b><font color="#009384">{{word1[7]}}</font></b><br>{{def1[7]}}</br></td>
   </tr>
-          <tr>
-    <td>{{my_maintextbefore7}}<b><font color="#002f4a">{{my_maintextkey7}}</font></b>{{my_maintextafter7}}</td>
-          <td><b><font color="#009384">{{my_seventh_word}}</font></b><br>{{my_seventh_definition}}</br></td>
+  <tr>
+      <td>{{parabefore[8]}}<b><font color="#002f4a">{{parakey[8]}}</font></b>{{paraafter[8]}}</td>
+      <td><b><font color="#009384">{{word1[8]}}</font></b><br>{{def1[8]}}</br></td>
+  </tr>
+  <tr>
+      <td>{{parabefore[9]}}<b><font color="#002f4a">{{parakey[9]}}</font></b>{{paraafter[9]}}</td>
+      <td><b><font color="#009384">{{word1[9]}}</font></b><br>{{def1[9]}}</br></td>
+  </tr>
+  <tr>
+      <td>{{parabefore[10]}}<b><font color="#002f4a">{{parakey[10]}}</font></b>{{paraafter[10]}}</td>
+      <td><b><font color="#009384">{{word1[10]}}</font></b><br>{{def1[10]}}</br></td>
+  </tr>
+  <tr>
+      <td>{{parabefore[11]}}<b><font color="#002f4a">{{parakey[11]}}</font></b>{{paraafter[11]}}</td>
+      <td><b><font color="#009384">{{word1[11]}}</font></b><br>{{def1[11]}}</br></td>
+  </tr>
+  <tr>
+      <td>{{parabefore[12]}}<b><font color="#002f4a">{{parakey[12]}}</font></b>{{paraafter[12]}}</td>
+      <td><b><font color="#009384">{{word1[12]}}</font></b><br>{{def1[12]}}</br></td>
+  </tr>
+  <tr>
+      <td>{{parabefore[13]}}<b><font color="#002f4a">{{parakey[13]}}</font></b>{{paraafter[13]}}</td>
+      <td><b><font color="#009384">{{word1[13]}}</font></b><br>{{def1[13]}}</br></td>
+  </tr>
+  <tr>
+      <td>{{parabefore[14]}}<b><font color="#002f4a">{{parakey[14]}}</font></b>{{paraafter[14]}}</td>
+      <td><b><font color="#009384">{{word1[14]}}</font></b><br>{{def1[14]}}</br></td>
+  </tr>
+  <tr>
+      <td>{{parabefore[15]}}<b><font color="#002f4a">{{parakey[15]}}</font></b>{{paraafter[15]}}</td>
+      <td><b><font color="#009384">{{word1[15]}}</font></b><br>{{def1[15]}}</br></td>
   </tr>
 </table>
 

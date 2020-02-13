@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1ed3631c-566c-41b6-8215-7af129f8f212" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/TextHelper.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/TextHelper.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projectname/getsynonyms.py" beforeDir="false" afterPath="$PROJECT_DIR$/projectname/getsynonyms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
