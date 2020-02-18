@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Landing Page - Text Helper</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="/home/ubuntu/application/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/home/ubuntu/application/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="/home/ubuntu/application/static/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+  <!-- Custom styles for this template -->
+  <link href="/home/ubuntu/application/static/css/landing-page.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+<!-- Try Section -->
+
+  	<div class="container">
+        <br>
+    	<h2 class="text-center text-black">Please enter the url of a Towardsdatascience website!</h2>
+        <hr>
+        <form action="/output" method="GET" id="user_input">
+            <input class="form-control" type="text" id="user_input" name='user_input' placeholder="https://towardsdatascience.com/introduction-to-streaming-algorithms-b71808de6d29">
+        </form>
+        <br>
+        <div class="row justify-content-center">
+         	<button type="submit" class="btn btn-secondary btn-lg" form="user_input">Go!</button>
+  	</div>
+        <br>
+
+  	{% if my_form_result=='Empty' %}
+  	<div class="row mt-4 justify-content-center">
+        	<h4 class="text-danger text-center text-uppercase">You did not type anything!</h4>
+  	</div>
+
+  	{% elif my_form_result=='NotEmpty' %}
+<!--Output table showing main text and text helper tools-->
+ <div class="row justify-content-start" style="padding-top:10px;">
+     <label><b>{{my_title}}</b></label>
+                </div>
+                <div class="row justify-content-start" style="padding-top:10px;">
+<!--{{my_table}}-->
+
+
+<table style="width:100%">
+  <tr>
+   <th>Main text</th>
+   <th>Infrequent words</th>
+  </tr>
+  <tr>
+      <td>{{my_maintextbefore}}<b><font color="blue">{{my_maintextkey}}</font></b>{{my_maintextafter}}</td>
+      <td><b><font color="green">{{my_first_word}}</font></b><br>{{my_first_definition}}</br></td>
+  </tr>
+  <tr>
+    <td>{{my_maintextbefore2}}<b><font color="blue">{{my_maintextkey2}}</font></b>{{my_maintextafter2}}</td>
+      <td><b><font color="green">{{my_second_word}}</font></b><br>{{my_second_definition}}</br></td>
+  </tr>
+  <tr>
+    <td>{{my_maintextbefore3}}<b><font color="blue">{{my_maintextkey3}}</font></b>{{my_maintextafter3}}</td>
+      <td><b><font color="green">{{my_third_word}}</font></b><br>{{my_third_definition}}</br></td>
+  </tr>
+      <tr>
+    <td>{{my_maintextbefore4}}<b><font color="blue">{{my_maintextkey4}}</font></b>{{my_maintextafter4}}</td>
+          <td><b><font color="green">{{my_fourth_word}}</font></b><br>{{my_fourth_definition}}</br></td>
+  </tr>
+  </tr>
+      <tr>
+    <td>{{my_maintextbefore5}}<b><font color="blue">{{my_maintextkey5}}</font></b>{{my_maintextafter5}}</td>
+          <td><b><font color="green">{{my_fifth_word}}</font></b><br>{{my_fifth_definition}}</br></td>
+  </tr>
+  </tr>
+      <tr>
+    <td>{{my_maintextbefore6}}<b><font color="blue">{{my_maintextkey6}}</font></b>{{my_maintextafter6}}</td>
+          <td><b><font color="green">{{my_sixth_word}}</font></b><br>{{my_sixth_definition}}</br></td>
+  </tr>
+          <tr>
+    <td>{{my_maintextbefore7}}<b><font color="blue">{{my_maintextkey7}}</font></b>{{my_maintextafter7}}</td>
+          <td><b><font color="green">{{my_seventh_word}}</font></b><br>{{my_seventh_definition}}</br></td>
+  </tr>
+</table>
+
+
+
+  	{% else %}
+  	{% endif %}
+  	</div>
+	</section>
+
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/home/ubuntu/application/static/vendor/jquery/jquery.min.js"></script>
+  <script src="/home/ubuntu/application/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

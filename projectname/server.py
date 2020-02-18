@@ -35,14 +35,15 @@ def recommendation_output():
 	items=[]
 	for paragraphs in some_maintext:
 		paragraph.append(paragraphs)
-		words=getsynonyms.getfrequencySUBTLEX(getsynonyms.spacy_nlp(str(paragraphs))[1])
+		#words=getsynonyms.getfrequencySUBTLEX(getsynonyms.spacy_nlp(str(paragraphs))[1])
+		words = getsynonyms.getfrequencyTFIDF(getsynonyms.spacy_nlp(str(paragraphs))[1])
 		word1.append(words)
 		if radio_value=="1":
 			def1.append(getsynonyms.getsynforinfreq(words)[0])
-			whichdeforsyn="Synonyms"
+			whichdeforsyn="Definitions"
 		else:
 			def1.append(getsynonyms.getsynforinfreq(words)[1])
-			whichdeforsyn = "Definitions"
+			whichdeforsyn = "Synonyms"
 		currentkeyword=getsynonyms.findkeywords(getsynonyms.spacy_nlp(str(paragraphs))[0])
 		keyword.append(currentkeyword)
 		currentdict={}
