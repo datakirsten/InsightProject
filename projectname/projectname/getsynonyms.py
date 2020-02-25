@@ -41,29 +41,21 @@ def getarticle(currenturl):
          # get the text only
         text = paragraph.get_text()
         paragraphtext.append(text)
-         ###something is still going wrong here...
-        # if len(text.split())<100:
-        #     ####add if loop: if newparagraphtext=[] append to newparaghtext anyways, only if there is already an element add to prevoiustext
-        #     if newparagraphtext==[]:
-        #         newparagraphtext.append(text)
-        #     else:
-        #         previoustext=previoustext + " " + text
-        # else:
-        #     mytext=previoustext + " " + text
-        #     newparagraphtext.append(mytext)
-        #     if len(mytext.split())>=100:
-        #         previoustext=""
-    newparagraphtext=paragraphtext.copy()
-    mylist = []
-    x=len(paragraphtext[0].split())
-    for i in range(len(paragraphtext)):
-     #  len(paragraphtext[0].split())
-        newparagraphtext[i-1:i]=[''.join(newparagraphtext[i-1:i])]
+    ###combine list elements if paragraphs is very short
+    newparagraphtext=[]
+    i=-1
+    for text in paragraphtext:
+        if len(text.split())<50 and newparagraphtext!=[] and len(newparagraphtext[i].split())<120:
+            newparagraphtext[i]=newparagraphtext[i]+" "+text
+        else:
+            newparagraphtext.append(text)
+            i=i+1
+
+
     return title, paragraphtext,newparagraphtext
 
 b=getarticle(url)
 #print(b[1])
-#print(b[2])
 
 
 
@@ -71,8 +63,8 @@ b=getarticle(url)
 ##return both the whole spacy preprocessing ouput (article_lemma) & a list of lemmas limited to POS=Noun
 def spacy_nlp(input_paragraph, allowed_postags=None):
     if allowed_postags is None:
-        #allowed_postags = ['NOUN', 'ADJ', 'VERB', 'ADV']
-        allowed_postags = ['NOUN']
+        allowed_postags = ['NOUN', 'ADJ', 'VERB', 'ADV']
+        #allowed_postags = ['NOUN', 'VERB']
     article_lemma = nlp(input_paragraph)
     texts_out = []
     texts_out_lemma =[]
@@ -80,10 +72,11 @@ def spacy_nlp(input_paragraph, allowed_postags=None):
         if token.pos_ in allowed_postags:
             texts_out.append(token)
             texts_out_lemma.append(token.lemma_)
-    return texts_out,article_lemma,texts_out_lemma
+    return texts_out,article_lemma,texts_out_lemma#,non_lemma
 
-c=spacy_nlp(str(b[1][12]))
+c=spacy_nlp(str(b[1][1]))
 #print(c[0])
+#print(c[3])
 #print(c[1])
 
 ###function that reads in the SUBTLEXus corpus and finds frequency of all input tokens in it
@@ -92,7 +85,6 @@ def getfrequencySUBTLEX(input_paragraph):
     # read in subtlexus corpus, large corpus with frequency information
     corpus = pd.read_csv('/Users/Kirsten/Documents/GitHub/InsightProject/data/corpora/SUBTLEXusExcel2007.tsv', sep='\t', index_col="Word")
     #corpus = pd.read_csv('/home/ubuntu/application/data/corpora/SUBTLEXusExcel2007.tsv', sep='\t', index_col="Word")
-
     corpus.head()
     # for those word types carrying meaning (filter on POS), make a ranking according to frequency
     listofwordtypes = ['VERB', 'ADV', 'NOUN', 'ADJ']
@@ -112,17 +104,22 @@ def getfrequencySUBTLEX(input_paragraph):
     mostinfrequent = input_paragraph[outputtuple[0][1]]
     return mostinfrequent
 
-#d=getfrequencySUBTLEX(c[1])
+d=getfrequencySUBTLEX(c[0])
 #print(d)
 ###use gensim's text summarization to find keywords in a paragraph, returns the keyword
 def findkeywords(input_paragraph):
     #at the moment POS=NOUN, because of earlier filtering in spacy_nlp
-    input_text=' '.join(word.lemma_ for word in input_paragraph)
+    noun_postags = ['NOUN']
+    input_text=' '.join(word.lemma_ for word in input_paragraph if word.pos_ in noun_postags)
     keyword = keywords(input_text, words=1, scores=False, lemmatize=False)
+    keyword_list=[]
+    keyword_split=keyword.split()
+    for w in keyword_split:
+        keyword_list.append(w)
     return keyword
-#e=findkeywords(c[0])
-#print(e)
-###get infrequent words using TDIDF (still needs to be moved here from jupyter notebook)
+
+
+###get infrequent words using TDIDF
 def getfrequencyTFIDF(input_paragraph, bow=None):
     texts_out=[]
     texts_out_lemma = []
@@ -133,8 +130,8 @@ def getfrequencyTFIDF(input_paragraph, bow=None):
             texts_out_lemma.append(token.lemma_)
  #   input_text = ' '.join(word.lemma_ for word in input_paragraph)
  #   lexicon = corpora.Dictionary.load_from_text('lexicon.txt')
-    tfidf = models.TfidfModel.load('/Users/Kirsten/Documents/GitHub/InsightProject/projectname/projectname/tfidf_datascience10000.pkl')
-    lexicon=gensim.corpora.Dictionary.load_from_text('/Users/Kirsten/Documents/GitHub/InsightProject/projectname/projectname/lexicon_datascience10000.txt')
+    tfidf = models.TfidfModel.load('/Users/Kirsten/Documents/GitHub/InsightProject/projectname/projectname/tfidf_datascience20000.pkl')
+    lexicon=gensim.corpora.Dictionary.load_from_text('/Users/Kirsten/Documents/GitHub/InsightProject/projectname/projectname/lexicon_datascience20000.txt')
    # lexicon=load('lexicon_datascience.txt')
     #bow = []
     #for t in input_paragraph:
@@ -144,32 +141,39 @@ def getfrequencyTFIDF(input_paragraph, bow=None):
     #sorted(corpus_tfidf, key=lambda x: x[1], reverse=True)[:5]
     n_terms = 1
     top_terms = []
+    #outputtfidf = sorted(zip(corpus_tfidf, texts_out))[:2]
+    #mostinfrequent = input_paragraph[outputtuple[0][1]]
     for obj in sorted(corpus_tfidf, key=lambda x: x[1], reverse=True)[:n_terms]:
         top_terms=lexicon[obj[0]]
+        #otherthing=
         #top_terms.append("{0:s} ({1:01.03f})".format(lexicon[obj[0]], obj[1]))
    # print(top_terms)
-    return top_terms
+    b=texts_out_lemma.index(top_terms)
+    x=texts_out[b]
 
-f=getfrequencyTFIDF(c[1])
-print(f)
+    #x=texts_out[0]
+    return top_terms,x
+
+g=getfrequencyTFIDF(c[0])
+print(g)
 
 ###get definitions (and synonyms,currently commented) using wordnet
 def getsynforinfreq(word):
     from nltk.corpus import wordnet as wn  # Import wordnet from the NLTK
     syn = []
     definition=[]
-    #currentpos_name=word.pos_
-    #if currentpos_name=="ADV":
-     #   currentpos_name="r"
-    #x=currentpos_name[0].lower()
-    synsets=wn.synsets(str(word))#,pos=str(x))#,pos=currentpos)
+    currentpos_name=word.pos_
+    if currentpos_name=="ADV":
+        currentpos_name="r"
+    x=currentpos_name[0].lower()
+    synsets=wn.synsets(str(word),pos=str(x))#,pos=currentpos)
     #definition=synsets[0].definition()
     mysyn=[]
     #synonym=synsets[0].hypernyms()
     for syn in synsets:
         definition.append(syn.definition())
         for lemma in syn.lemmas():
-            if str(lemma.name()) != word:#.lemma_:
+            if str(lemma.name()) != word.lemma_:
                 mysyn.append(lemma.name())
     if definition==[]:
         definition.append("no definition found")
@@ -177,7 +181,8 @@ def getsynforinfreq(word):
         mysyn.append("no synonym found")
     return definition[0], mysyn[0] #definition[0] #definition[0] #, mysyn[0]
 
-g=getsynforinfreq(f)
-print(g)
+e=getsynforinfreq(g[1])
 
-
+#print(d.pos_)
+#print(d)
+print(e)

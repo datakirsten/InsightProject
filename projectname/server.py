@@ -17,14 +17,15 @@ def recommendation_output():
 	# Pull input
 	some_input = request.args.get('user_input')
 	radio_value=request.args.get('syndef')
-	#assert radio_value == 5, f"Radio Value {radio_value}"
+	radio_value_keyinf=request.args.get('keyorinf')
+	radio_value_eords=request.args.get('eords')
 	# Case if input empty
 	# Use the example from the website shown
 	if some_input == "":
 		some_input="https://towardsdatascience.com/how-discrimination-occurs-in-data-analytics-and-machine-learning-proxy-variables-7c22ff20792"
 
 	###use the functions in the getsynonyms.py file to scrape the website text and provide the TextHelper tool output to the flask app
-	some_title, some_maintext, someother_maintext = getsynonyms.getarticle(some_input)
+	some_title, someother_maintext, some_maintext = getsynonyms.getarticle(some_input)
 	paragraph=[]
 	word1=[]
 	def1=[]
@@ -35,8 +36,10 @@ def recommendation_output():
 	items=[]
 	for paragraphs in some_maintext:
 		paragraph.append(paragraphs)
-		#words=getsynonyms.getfrequencySUBTLEX(getsynonyms.spacy_nlp(str(paragraphs))[1])
-		words = getsynonyms.getfrequencyTFIDF(getsynonyms.spacy_nlp(str(paragraphs))[1])
+		if radio_value_eords=="1":
+			words=getsynonyms.getfrequencySUBTLEX(getsynonyms.spacy_nlp(str(paragraphs))[0])
+		else:
+			words = getsynonyms.getfrequencyTFIDF(getsynonyms.spacy_nlp(str(paragraphs))[0])[1]
 		word1.append(words)
 		if radio_value=="1":
 			def1.append(getsynonyms.getsynforinfreq(words)[0])
@@ -50,15 +53,26 @@ def recommendation_output():
 		currentdict['paragraphs']=paragraphs
 		currentdict['infrequent']=words
 		items.append(currentdict)
-		if not currentkeyword:
-			parabefore.append(paragraphs)
-			parakey.append([])
-			paraafter.append([])
+		if radio_value_keyinf=="1":
+			if not currentkeyword:   #	to divide by infrequent:	if not words:
+				parabefore.append(paragraphs)
+				parakey.append("")
+				paraafter.append("")
+			else:
+				parapartition=paragraphs.partition(str(currentkeyword))  #to divide by infrequent parapartition=paragraphs.partition(str(words))
+				parabefore.append(parapartition[0])
+				parakey.append(parapartition[1])
+				paraafter.append(parapartition[2])
 		else:
-			parapartition=paragraphs.partition(currentkeyword)
-			parabefore.append(parapartition[0])
-			parakey.append(parapartition[1])
-			paraafter.append(parapartition[2])
+			if not words:   #	to divide by infrequent:	if not words:
+				parabefore.append(paragraphs)
+				parakey.append("")
+				paraafter.append("")
+			else:
+				parapartition=paragraphs.partition(str(words))  #to divide by infrequent parapartition=paragraphs.partition(str(words))
+				parabefore.append(parapartition[0])
+				parakey.append(parapartition[1])
+				paraafter.append(parapartition[2])
 	for i in range(0,20):
 		parabefore.append("")
 		parakey.append("")
@@ -76,7 +90,7 @@ def recommendation_output():
 		paraafter=paraafter,
 		def1=def1,
 		which_output=whichdeforsyn,
-		keyword=keyword,
+		keyword="",#keyword,
 		word1=word1,
 		my_form_result="NotEmpty")
 

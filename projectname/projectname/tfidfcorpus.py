@@ -30,7 +30,7 @@ for text in df['text']:
 
 #print(currenttext[0:4])
 
-xxx=currenttext[0:40000]
+xxx=currenttext[0:20000]
 
 allowed_postags = ['NOUN', 'ADJ', 'VERB', 'ADV']
 lemmatizedcorpus=[]
@@ -77,9 +77,9 @@ tfidf = gensim.models.TfidfModel(bow)
 # tfidf   = gensim.models.TfidfModel(dictionary=lexicon, normalize=True)
 # vectors = [tfidf[lexicon.doc2bow(doc)] for doc in corpus]
 
-datascience_dictionary.save_as_text('lexicon_datascience40000.txt', sort_by_word=True)
-tfidf.save('tfidf_datascience40000.pkl')
-datascience_dictionary.save('lexiconpkl40000.pkl')
+datascience_dictionary.save_as_text('lexicon_datascience20000.txt', sort_by_word=True)
+tfidf.save('tfidf_datascience20000.pkl')
+datascience_dictionary.save('lexiconpkl20000.pkl')
 
 
 #tf_obj = tfidf[bow[1]]
