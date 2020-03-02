@@ -3,15 +3,13 @@ import spacy
 # next commented step is only necessary when loading of the english language library fails due to weird behaviour of anaconda
 # from spacy.cli import download
 # download('en')
-nlp = spacy.load('en_core_web_sm', disable=['parser', 'ner'])
+nlp = spacy.load('en_core_web_sm')
 import pandas as pd
-import nltk
-nltk.download('wordnet')
+#import nltk
+#nltk.download('wordnet')
 import gensim
 from gensim.summarization import keywords
-import gensim.corpora as corpora
 import gensim.models as models
-
 # Import the relevant tools to get text from a website
 from bs4 import BeautifulSoup
 import requests
@@ -45,7 +43,7 @@ def getarticle(currenturl):
     newparagraphtext=[]
     i=-1
     for text in paragraphtext:
-        if len(text.split())<50 and newparagraphtext!=[] and len(newparagraphtext[i].split())<120:
+        if len(text.split())<70 and newparagraphtext!=[] and len(newparagraphtext[i].split())<100:
             newparagraphtext[i]=newparagraphtext[i]+" "+text
         else:
             newparagraphtext.append(text)
@@ -53,11 +51,6 @@ def getarticle(currenturl):
 
 
     return title, paragraphtext,newparagraphtext
-
-b=getarticle(url)
-#print(b[1])
-
-
 
 ##do preprocessing in spacy to get parts of of speech (POS) and lemmatized words
 ##return both the whole spacy preprocessing ouput (article_lemma) & a list of lemmas limited to POS=Noun
@@ -72,12 +65,9 @@ def spacy_nlp(input_paragraph, allowed_postags=None):
         if token.pos_ in allowed_postags:
             texts_out.append(token)
             texts_out_lemma.append(token.lemma_)
-    return texts_out,article_lemma,texts_out_lemma#,non_lemma
+    return texts_out,article_lemma,texts_out_lemma
 
-c=spacy_nlp(str(b[1][1]))
-#print(c[0])
-#print(c[3])
-#print(c[1])
+
 
 ###function that reads in the SUBTLEXus corpus and finds frequency of all input tokens in it
 ###returns the most infrequent word
@@ -104,19 +94,18 @@ def getfrequencySUBTLEX(input_paragraph):
     mostinfrequent = input_paragraph[outputtuple[0][1]]
     return mostinfrequent
 
-d=getfrequencySUBTLEX(c[0])
-#print(d)
+
 ###use gensim's text summarization to find keywords in a paragraph, returns the keyword
 def findkeywords(input_paragraph):
     #at the moment POS=NOUN, because of earlier filtering in spacy_nlp
     noun_postags = ['NOUN']
+    noun_chunk=[]
     input_text=' '.join(word.lemma_ for word in input_paragraph if word.pos_ in noun_postags)
     keyword = keywords(input_text, words=1, scores=False, lemmatize=False)
-    keyword_list=[]
-    keyword_split=keyword.split()
-    for w in keyword_split:
-        keyword_list.append(w)
-    return keyword
+    for chunk in input_paragraph.noun_chunks:
+        if keyword==chunk.root.text:
+                noun_chunk=chunk
+    return keyword, noun_chunk
 
 
 ###get infrequent words using TDIDF
@@ -128,34 +117,23 @@ def getfrequencyTFIDF(input_paragraph, bow=None):
         if token.pos_ in allowed_postags:
             texts_out.append(token)
             texts_out_lemma.append(token.lemma_)
- #   input_text = ' '.join(word.lemma_ for word in input_paragraph)
- #   lexicon = corpora.Dictionary.load_from_text('lexicon.txt')
     tfidf = models.TfidfModel.load('/Users/Kirsten/Documents/GitHub/InsightProject/projectname/projectname/tfidf_datascience20000.pkl')
     lexicon=gensim.corpora.Dictionary.load_from_text('/Users/Kirsten/Documents/GitHub/InsightProject/projectname/projectname/lexicon_datascience20000.txt')
-   # lexicon=load('lexicon_datascience.txt')
-    #bow = []
-    #for t in input_paragraph:
+    #tfidf = models.TfidfModel.load('/home/ubuntu/application/projectname/tfidf_datascience20000.pkl')
+    #lexicon=gensim.corpora.Dictionary.load_from_text('/home/ubuntu/application/projectname/lexicon_datascience20000.txt')
     bow=lexicon.doc2bow(texts_out_lemma)
     corpus_tfidf = tfidf[bow]
-  #  tf_obj = tfidf[bow[1]]
-    #sorted(corpus_tfidf, key=lambda x: x[1], reverse=True)[:5]
     n_terms = 1
     top_terms = []
-    #outputtfidf = sorted(zip(corpus_tfidf, texts_out))[:2]
-    #mostinfrequent = input_paragraph[outputtuple[0][1]]
     for obj in sorted(corpus_tfidf, key=lambda x: x[1], reverse=True)[:n_terms]:
         top_terms=lexicon[obj[0]]
-        #otherthing=
-        #top_terms.append("{0:s} ({1:01.03f})".format(lexicon[obj[0]], obj[1]))
-   # print(top_terms)
     b=texts_out_lemma.index(top_terms)
     x=texts_out[b]
-
-    #x=texts_out[0]
     return top_terms,x
 
-g=getfrequencyTFIDF(c[0])
-print(g)
+
+
+
 
 ###get definitions (and synonyms,currently commented) using wordnet
 def getsynforinfreq(word):
@@ -167,9 +145,7 @@ def getsynforinfreq(word):
         currentpos_name="r"
     x=currentpos_name[0].lower()
     synsets=wn.synsets(str(word),pos=str(x))#,pos=currentpos)
-    #definition=synsets[0].definition()
     mysyn=[]
-    #synonym=synsets[0].hypernyms()
     for syn in synsets:
         definition.append(syn.definition())
         for lemma in syn.lemmas():
@@ -179,10 +155,5 @@ def getsynforinfreq(word):
         definition.append("no definition found")
     if mysyn==[]:
         mysyn.append("no synonym found")
-    return definition[0], mysyn[0] #definition[0] #definition[0] #, mysyn[0]
+    return definition[0], mysyn[0]
 
-e=getsynforinfreq(g[1])
-
-#print(d.pos_)
-#print(d)
-print(e)

@@ -43,13 +43,13 @@
         <hr>
         <form action="/output" method="GET" id="user_input">
             <input class="form-control" type="text" id="user_input" name='user_input' placeholder="https://towardsdatascience.com/how-discrimination-occurs-in-data-analytics-and-machine-learning-proxy-variables-7c22ff20792">
-            <p> Would you like to highlight keywords or infrequent/unusual words within the text?:
-            <input type="radio" name="keyorinf" value="1" checked> Keywords
-            <input type="radio" name="keyorinf" value="2"> Infrequent</p>
-            <p>Infrequent/unusual words in the English language or in data science related articles?:
-            <input type="radio" name="eords" value="1" checked> English language
-            <input type="radio" name="eords" value="2"> Data science articles</p>
-            <p>Would you like to see Definitions or Synonyms for the infrequent/unusual words?:
+            <p> Use key phrases as paragraph headers:
+            <input type="radio" name="headersornot" value="1" checked> No
+            <input type="radio" name="headersornot" value="2"> Yes</p>
+            <p>Highlight complicated or unfamiliar words:
+            <input type="radio" name="eords" value="1" checked> in English
+            <input type="radio" name="eords" value="2"> in data science articles</p>
+            <p>Provide definitions or synonyms for unframiliar words:
             <input type="radio" name="syndef" value="1" checked> Definitions
             <input type="radio" name="syndef" value="2"> Synonyms</p>
 
@@ -82,67 +82,67 @@
    <th>{{which_output}}</th>
   </tr>
   <tr>
-      <td><b><font color="#002f4a">{{keyword[0]}}</font></b><br>{{parabefore[0]}}<b><font color="#002f4a">{{parakey[0]}}</font></b>{{paraafter[0]}}</td>
+      <td><b><font color="#002f4a">{{keyword[0]}}</font></b><br>{{parabefore[0]}}<b><font color="#009384">{{parakey[0]}}</font></b>{{paraafter[0]}}</td>
       <td><b><font color="#009384">{{word1[0]}}</font></b><br>{{def1[0]}}</br></td>
   </tr>
   <tr>
-      <td><b><font color="#002f4a">{{keyword[1]}}</font></b><br>{{parabefore[1]}}<b><font color="#002f4a">{{parakey[1]}}</font></b>{{paraafter[1]}}</td>
+      <td><b><font color="#002f4a">{{keyword[1]}}</font></b><br>{{parabefore[1]}}<b><font color="#009384">{{parakey[1]}}</font></b>{{paraafter[1]}}</td>
       <td><b><font color="#009384">{{word1[1]}}</font></b><br>{{def1[1]}}</br></td>
   </tr>
   <tr>
-      <td><b><font color="#002f4a">{{keyword[2]}}</font></b><br>{{parabefore[2]}}<b><font color="#002f4a">{{parakey[2]}}</font></b>{{paraafter[2]}}</td>
+      <td><b><font color="#002f4a">{{keyword[2]}}</font></b><br>{{parabefore[2]}}<b><font color="#009384">{{parakey[2]}}</font></b>{{paraafter[2]}}</td>
       <td><b><font color="#009384">{{word1[2]}}</font></b><br>{{def1[2]}}</br></td>
   </tr>
   <tr>
-      <td><b><font color="#002f4a">{{keyword[3]}}</font></b><br>{{parabefore[3]}}<b><font color="#002f4a">{{parakey[3]}}</font></b>{{paraafter[3]}}</td>
+      <td><b><font color="#002f4a">{{keyword[3]}}</font></b><br>{{parabefore[3]}}<b><font color="#009384">{{parakey[3]}}</font></b>{{paraafter[3]}}</td>
       <td><b><font color="#009384">{{word1[3]}}</font></b><br>{{def1[3]}}</br></td>
   </tr>
   <tr>
-      <td><b><font color="#002f4a">{{keyword[4]}}</font></b><br>{{parabefore[4]}}<b><font color="#002f4a">{{parakey[4]}}</font></b>{{paraafter[4]}}</td>
+      <td><b><font color="#002f4a">{{keyword[4]}}</font></b><br>{{parabefore[4]}}<b><font color="#009384">{{parakey[4]}}</font></b>{{paraafter[4]}}</td>
       <td><b><font color="#009384">{{word1[4]}}</font></b><br>{{def1[4]}}</br></td>
   </tr>
   <tr>
-      <td><b><font color="#002f4a">{{keyword[5]}}</font></b><br>{{parabefore[5]}}<b><font color="#002f4a">{{parakey[5]}}</font></b>{{paraafter[5]}}</td>
+      <td><b><font color="#002f4a">{{keyword[5]}}</font></b><br>{{parabefore[5]}}<b><font color="#009384">{{parakey[5]}}</font></b>{{paraafter[5]}}</td>
       <td><b><font color="#009384">{{word1[5]}}</font></b><br>{{def1[5]}}</br></td>
   </tr>
   <tr>
-      <td><b><font color="#002f4a">{{keyword[6]}}</font></b><br>{{parabefore[6]}}<b><font color="#002f4a">{{parakey[6]}}</font></b>{{paraafter[6]}}</td>
+      <td><b><font color="#002f4a">{{keyword[6]}}</font></b><br>{{parabefore[6]}}<b><font color="#009384">{{parakey[6]}}</font></b>{{paraafter[6]}}</td>
       <td><b><font color="#009384">{{word1[6]}}</font></b><br>{{def1[6]}}</br></td>
   </tr>
   <tr>
-      <td><b><font color="#002f4a">{{keyword[7]}}</font></b><br>{{parabefore[7]}}<b><font color="#002f4a">{{parakey[7]}}</font></b>{{paraafter[7]}}</td>
+      <td><b><font color="#002f4a">{{keyword[7]}}</font></b><br>{{parabefore[7]}}<b><font color="#009384">{{parakey[7]}}</font></b>{{paraafter[7]}}</td>
       <td><b><font color="#009384">{{word1[7]}}</font></b><br>{{def1[7]}}</br></td>
   </tr>
   <tr>
-      <td><b><font color="#002f4a">{{keyword[8]}}</font></b><br>{{parabefore[8]}}<b><font color="#002f4a">{{parakey[8]}}</font></b>{{paraafter[8]}}</td>
+      <td><b><font color="#002f4a">{{keyword[8]}}</font></b><br>{{parabefore[8]}}<b><font color="#009384">{{parakey[8]}}</font></b>{{paraafter[8]}}</td>
       <td><b><font color="#009384">{{word1[8]}}</font></b><br>{{def1[8]}}</br></td>
   </tr>
   <tr>
-      <td><b><font color="#002f4a">{{keyword[9]}}</font></b><br>{{parabefore[9]}}<b><font color="#002f4a">{{parakey[9]}}</font></b>{{paraafter[9]}}</td>
+      <td><b><font color="#002f4a">{{keyword[9]}}</font></b><br>{{parabefore[9]}}<b><font color="#009384">{{parakey[9]}}</font></b>{{paraafter[9]}}</td>
       <td><b><font color="#009384">{{word1[9]}}</font></b><br>{{def1[9]}}</br></td>
   </tr>
   <tr>
-      <td><b><font color="#002f4a">{{keyword[10]}}</font></b><br>{{parabefore[10]}}<b><font color="#002f4a">{{parakey[10]}}</font></b>{{paraafter[10]}}</td>
+      <td><b><font color="#002f4a">{{keyword[10]}}</font></b><br>{{parabefore[10]}}<b><font color="#009384">{{parakey[10]}}</font></b>{{paraafter[10]}}</td>
       <td><b><font color="#009384">{{word1[10]}}</font></b><br>{{def1[10]}}</br></td>
   </tr>
   <tr>
-      <td><b><font color="#002f4a">{{keyword[11]}}</font></b><br>{{parabefore[11]}}<b><font color="#002f4a">{{parakey[11]}}</font></b>{{paraafter[11]}}</td>
+      <td><b><font color="#002f4a">{{keyword[11]}}</font></b><br>{{parabefore[11]}}<b><font color="#009384">{{parakey[11]}}</font></b>{{paraafter[11]}}</td>
       <td><b><font color="#009384">{{word1[11]}}</font></b><br>{{def1[11]}}</br></td>
   </tr>
   <tr>
-      <td><b><font color="#002f4a">{{keyword[12]}}</font></b><br>{{parabefore[12]}}<b><font color="#002f4a">{{parakey[12]}}</font></b>{{paraafter[12]}}</td>
+      <td><b><font color="#002f4a">{{keyword[12]}}</font></b><br>{{parabefore[12]}}<b><font color="#009384">{{parakey[12]}}</font></b>{{paraafter[12]}}</td>
       <td><b><font color="#009384">{{word1[12]}}</font></b><br>{{def1[12]}}</br></td>
   </tr>
   <tr>
-      <td><b><font color="#002f4a">{{keyword[13]}}</font></b><br>{{parabefore[13]}}<b><font color="#002f4a">{{parakey[13]}}</font></b>{{paraafter[13]}}</td>
+      <td><b><font color="#002f4a">{{keyword[13]}}</font></b><br>{{parabefore[13]}}<b><font color="#009384">{{parakey[13]}}</font></b>{{paraafter[13]}}</td>
       <td><b><font color="#009384">{{word1[13]}}</font></b><br>{{def1[13]}}</br></td>
   </tr>
   <tr>
-      <td><b><font color="#002f4a">{{keyword[14]}}</font></b><br>{{parabefore[14]}}<b><font color="#002f4a">{{parakey[14]}}</font></b>{{paraafter[14]}}</td>
+      <td><b><font color="#002f4a">{{keyword[14]}}</font></b><br>{{parabefore[14]}}<b><font color="#009384">{{parakey[14]}}</font></b>{{paraafter[14]}}</td>
       <td><b><font color="#009384">{{word1[14]}}</font></b><br>{{def1[14]}}</br></td>
   </tr>
   <tr>
-      <td><b><font color="#002f4a">{{keyword[15]}}</font></b><br>{{parabefore[15]}}<b><font color="#002f4a">{{parakey[15]}}</font></b>{{paraafter[15]}}</td>
+      <td><b><font color="#002f4a">{{keyword[15]}}</font></b><br>{{parabefore[15]}}<b><font color="#009384">{{parakey[15]}}</font></b>{{paraafter[15]}}</td>
       <td><b><font color="#009384">{{word1[15]}}</font></b><br>{{def1[15]}}</br></td>
   </tr>
 </table>
