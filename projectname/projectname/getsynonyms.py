@@ -5,6 +5,7 @@ import spacy
 # download('en')
 nlp = spacy.load('en_core_web_sm')
 import pandas as pd
+
 #import nltk
 #nltk.download('wordnet')
 import gensim
@@ -31,7 +32,8 @@ def getarticle(currenturl):
     except:
         title = 'Anonymous'
     ## get main article text
-    articlebody = soup.find(class_='meteredContent').find_all('p')
+    articlebody = soup.find_all('p')#soup.find('article').find_all('p') # class_='meteredContent').find_all('p')
+    #article/data - selectable - paragraph
     # put main body of text into a list with the text structured paragraph by paragraph
     newparagraphtext=[]
     previoustext = ""
@@ -43,7 +45,7 @@ def getarticle(currenturl):
     newparagraphtext=[]
     i=-1
     for text in paragraphtext:
-        if len(text.split())<70 and newparagraphtext!=[] and len(newparagraphtext[i].split())<100:
+        if len(text.split())<60 and newparagraphtext!=[] and len(newparagraphtext[i].split())<120:
             newparagraphtext[i]=newparagraphtext[i]+" "+text
         else:
             newparagraphtext.append(text)
@@ -68,13 +70,12 @@ def spacy_nlp(input_paragraph, allowed_postags=None):
     return texts_out,article_lemma,texts_out_lemma
 
 
-
 ###function that reads in the SUBTLEXus corpus and finds frequency of all input tokens in it
 ###returns the most infrequent word
 def getfrequencySUBTLEX(input_paragraph):
     # read in subtlexus corpus, large corpus with frequency information
-    corpus = pd.read_csv('/Users/Kirsten/Documents/GitHub/InsightProject/data/corpora/SUBTLEXusExcel2007.tsv', sep='\t', index_col="Word")
-    #corpus = pd.read_csv('/home/ubuntu/application/data/corpora/SUBTLEXusExcel2007.tsv', sep='\t', index_col="Word")
+    #corpus = pd.read_csv('/Users/Kirsten/Documents/GitHub/InsightProject/data/corpora/SUBTLEXusExcel2007.tsv', sep='\t', index_col="Word")
+    corpus = pd.read_csv('/home/ubuntu/application/data/corpora/SUBTLEXusExcel2007.tsv', sep='\t', index_col="Word")
     corpus.head()
     # for those word types carrying meaning (filter on POS), make a ranking according to frequency
     listofwordtypes = ['VERB', 'ADV', 'NOUN', 'ADJ']
@@ -98,14 +99,24 @@ def getfrequencySUBTLEX(input_paragraph):
 ###use gensim's text summarization to find keywords in a paragraph, returns the keyword
 def findkeywords(input_paragraph):
     #at the moment POS=NOUN, because of earlier filtering in spacy_nlp
-    noun_postags = ['NOUN']
-    noun_chunk=[]
+    noun_postags = ['NOUN','VERB']
+  #  noun_chunk=[]
+   # wordchildren=[]
+    wordsubtree = ''
     input_text=' '.join(word.lemma_ for word in input_paragraph if word.pos_ in noun_postags)
     keyword = keywords(input_text, words=1, scores=False, lemmatize=False)
-    for chunk in input_paragraph.noun_chunks:
-        if keyword==chunk.root.text:
-                noun_chunk=chunk
-    return keyword, noun_chunk
+   # for chunk in input_paragraph.noun_chunks:
+    #    if keyword==chunk.root.text:
+     #           noun_chunk=chunk
+    for token in input_paragraph:
+        if token.lemma_==keyword:
+            for child in token.subtree:
+                wordsubtree+=child.text + " "#.append(child)
+            break
+         #   for child in token.rights:
+          #      wordchildren.append(child)
+  #  subtreeoutput=' '.join(wordsubtree)
+    return keyword, wordsubtree
 
 
 ###get infrequent words using TDIDF
@@ -117,10 +128,10 @@ def getfrequencyTFIDF(input_paragraph, bow=None):
         if token.pos_ in allowed_postags:
             texts_out.append(token)
             texts_out_lemma.append(token.lemma_)
-    tfidf = models.TfidfModel.load('/Users/Kirsten/Documents/GitHub/InsightProject/projectname/projectname/tfidf_datascience20000.pkl')
-    lexicon=gensim.corpora.Dictionary.load_from_text('/Users/Kirsten/Documents/GitHub/InsightProject/projectname/projectname/lexicon_datascience20000.txt')
-    #tfidf = models.TfidfModel.load('/home/ubuntu/application/projectname/tfidf_datascience20000.pkl')
-    #lexicon=gensim.corpora.Dictionary.load_from_text('/home/ubuntu/application/projectname/lexicon_datascience20000.txt')
+    #tfidf = models.TfidfModel.load('/Users/Kirsten/Documents/GitHub/InsightProject/projectname/projectname/tfidf_datascience20000.pkl')
+    #lexicon=gensim.corpora.Dictionary.load_from_text('/Users/Kirsten/Documents/GitHub/InsightProject/projectname/projectname/lexicon_datascience20000.txt')
+    tfidf = models.TfidfModel.load('/home/ubuntu/application/projectname/tfidf_datascience20000.pkl')
+    lexicon=gensim.corpora.Dictionary.load_from_text('/home/ubuntu/application/projectname/lexicon_datascience20000.txt')
     bow=lexicon.doc2bow(texts_out_lemma)
     corpus_tfidf = tfidf[bow]
     n_terms = 1
@@ -129,7 +140,13 @@ def getfrequencyTFIDF(input_paragraph, bow=None):
         top_terms=lexicon[obj[0]]
     b=texts_out_lemma.index(top_terms)
     x=texts_out[b]
-    return top_terms,x
+    wordsubtree=''
+    for token in input_paragraph:
+        if token.lemma_==top_terms:
+            for child in token.subtree:
+                wordsubtree+=child.text + " "#.append(child)
+            break
+    return top_terms,x,wordsubtree
 
 
 

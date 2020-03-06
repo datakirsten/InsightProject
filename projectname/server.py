@@ -25,7 +25,7 @@ def recommendation_output():
     # Case if input empty
     # Use the example from the website shown
     if some_input == "":
-        some_input = "https://towardsdatascience.com/how-discrimination-occurs-in-data-analytics-and-machine-learning-proxy-variables-7c22ff20792"
+        some_input = "https://towardsdatascience.com/streaming-twitter-data-into-a-mysql-database-d62a02b050d6"
 
     ###use the functions in the getsynonyms.py file to scrape the website text and provide the TextHelper tool output to the flask app
     some_title, someother_maintext, some_maintext = getsynonyms.getarticle(some_input)
@@ -55,19 +55,29 @@ def recommendation_output():
             whichdeforsyn = "Synonyms"
         currentkeyword = getsynonyms.findkeywords(getsynonyms.spacy_nlp(str(paragraphs))[1])[0]
         currentkeyword2 = getsynonyms.findkeywords(getsynonyms.spacy_nlp(str(paragraphs))[1])[1]
+        #currentkeyword2 = getsynonyms.getfrequencyTFIDF(getsynonyms.spacy_nlp(str(paragraphs))[0])[2]
        # keyword.append(currentkeyword)
        # currentdict = {}
        # currentdict['paragraphs'] = paragraphs
         #currentdict['infrequent'] = words
         #items.append(currentdict)
+        # if radio_value_headersornot == "2":
+        #     if not currentkeyword2:  # to divide by infrequent:	if not words:
+        #         # if not currentkeyword:
+        #         noun_phrase.append("")
+        #          #else:
+        #           #   noun_phrase.append(currentkeyword)
+        #     else:
+        #          noun_phrase.append(currentkeyword2)
+
         if radio_value_headersornot == "2":
-            if not currentkeyword2:  # to divide by infrequent:	if not words:
-                if not currentkeyword:
-                    noun_phrase.append("")
-                else:
-                    noun_phrase.append(currentkeyword)
-            else:
-                noun_phrase.append(currentkeyword2)
+             if not currentkeyword2:  # to divide by infrequent:	if not words:
+                noun_phrase.append(currentkeyword)
+                 #else:
+                  #   noun_phrase.append(currentkeyword)
+             else:
+                 noun_phrase.append(currentkeyword2)
+
         if not words:  # to divide by infrequent:	if not words:
                 parabefore.append(paragraphs)
                 parakey.append("")

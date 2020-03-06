@@ -2,8 +2,9 @@ import pandas as pd
 import gensim
 import gensim.corpora as corpora
 from gensim.utils import simple_preprocess
-from gensim.models import CoherenceModel
-
+import gensim.models as models
+import pyLDAvis
+import pyLDAvis.gensim
 import nltk
 
 nltk.download('punkt')
@@ -30,7 +31,7 @@ for text in df['text']:
 
 #print(currenttext[0:4])
 
-xxx=currenttext[0:20000]
+xxx=currenttext[0:20]
 
 allowed_postags = ['NOUN', 'ADJ', 'VERB', 'ADV']
 lemmatizedcorpus=[]
@@ -49,9 +50,10 @@ for text in xxx:
 # Create Dictionary
 datascience_dictionary = corpora.Dictionary(lemmatizedcorpus)
 
-bow = []
-for t in lemmatizedcorpus:
-    bow.append(datascience_dictionary.doc2bow(t))
+bow = [datascience_dictionary.doc2bow(text) for text in lemmatizedcorpus]
+#bow = []
+#for t in lemmatizedcorpus:
+#    bow.append(datascience_dictionary.doc2bow(t))
 
 #bow
 
@@ -74,12 +76,39 @@ for t in lemmatizedcorpus:
 #lexicon = gensim.corpora.Dictionary(texts)
 #corpus_tok = [lexicon.doc2bow(text) for text in texts]
 tfidf = gensim.models.TfidfModel(bow)
+corpus_tfidfm=tfidf[bow]
+
+mylda=gensim.models.LdaModel(corpus_tfidfm,num_topics=30,id2word=datascience_dictionary)
+#mylda=gensim.models.HdpModel(corpus_tfidfm,id2word=datascience_dictionary)
+topics = mylda.print_topics(num_words=4)
+for topic in topics:
+    print(topic)
+
+# Visualize the topics
+#pyLDAvis.enable_notebook()
+vis = pyLDAvis.gensim.prepare(mylda, corpus_tfidfm, datascience_dictionary)
+pyLDAvis.save_html(vis, 'LDA_Visualization.html')
+#models.LdaModel
+#h=createtopics(g[2])
+#h.print_topics(2)
+##pyLDAvis.enable_notebook()
+#vis=pyLDAvis.gensim.prepare(h,g[2],lexicon)
+#vis
+
+
+#lsi_model = gensim.models.LsiModel(corpus_tfidfm, id2word=datascience_dictionary, num_topics=2)  # initialize an LSI transformation
+#corpus_lsi = lsi_model[corpus_tfidfm]  # create a double wrapper over the original corpus: bow->tfidf->fold-in-lsi
+
+#lsi_model.print_topics(2)
+
+#for doc, as_text in zip(corpus_lsi, lemmatizedcorpus):
+ #   print(doc, as_text)
 # tfidf   = gensim.models.TfidfModel(dictionary=lexicon, normalize=True)
 # vectors = [tfidf[lexicon.doc2bow(doc)] for doc in corpus]
 
-datascience_dictionary.save_as_text('lexicon_datascience20000.txt', sort_by_word=True)
-tfidf.save('tfidf_datascience20000.pkl')
-datascience_dictionary.save('lexiconpkl20000.pkl')
+##datascience_dictionary.save_as_text('lexicon_datascience20000.txt', sort_by_word=True)
+#tfidf.save('tfidf_datascience20000.pkl')
+#datascience_dictionary.save('lexiconpkl20000.pkl')
 
 
 #tf_obj = tfidf[bow[1]]
