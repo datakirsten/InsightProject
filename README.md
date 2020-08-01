@@ -23,8 +23,9 @@ pandas
 Beautiful Soup
 requests
 
-# you can look at the app that was built here:
-http://understandingdata.xyz
+# The flask app was originally hosted on AWS, but is now offline.
+
+
 
 
 
